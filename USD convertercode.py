@@ -1,7 +1,6 @@
 print("""
-io_project_1.py
-by Gamingandmusic
 Currency converter, converts usd$ to another Currency.
+by Gamingandmusic
 """)
 # inputs
 name = input("name: ")
