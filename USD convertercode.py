@@ -1,53 +1,41 @@
-print("""
-Currency converter, converts usd$ to another Currency.
-by Gamingandmusic
-""")
-# inputs
-name = input("name: ")
-date = input("what's the date in mm/dd/yyyy: ")
-usd = input("amount of money in USD$: ")
+import requests
 
-# Currency conversions
+def fetch_exchange_rate(currency_code):
+    response = requests.get("https://api.exchangerate-api.com/v4/latest/USD")
+    data = response.json()
+    return data["rates"][currency_code]
 
-usd = float(usd)
+def convert_currency(usd_amount, exchange_rate):
+    return usd_amount * exchange_rate
 
-cad = usd * 1.40
+def main():
+    print("""
+    Currency converter, converts USD$ to another Currency.
+    by Gamingandmusic
+    """)
+    
+    # Input
+    usd = float(input("Amount of money in USD$: "))
 
-cad = float(cad)
+    # Fetch exchange rates
+    cad_rate = fetch_exchange_rate("CAD")
+    gbp_rate = fetch_exchange_rate("GBP")
+    euro_rate = fetch_exchange_rate("EUR")
 
-gbp = usd * 1.27
+    # Convert currencies
+    cad = convert_currency(usd, cad_rate)
+    gbp = convert_currency(usd, gbp_rate)
+    euro = convert_currency(usd, euro_rate)
 
-gbp = float(gbp)
+    # Print results
+    print("Currency conversions:")
+    print(f"USD: ${usd:.2f}")
+    print(f"EUR: €{euro:.2f}")
+    print(f"CAD: C${cad:.2f}")
+    print(f"GBP: £{gbp:.2f}")
 
-euro = usd * 0.94
+    # End program
+    input("Press enter to quit")
 
-euro = float(euro)
-
-# print
-print(name)
-
-print("thanks for using this program")
-
-print(date)
-
-print("-------------------------------")
-
-print("$")
-
-print(usd)
-
-print("€")
-
-print(euro)
-
-print("C$")
-
-print(cad)
-
-print("£")
-
-print(gbp)
-
-# ends program
-
-input("press enter to quit")
+if __name__ == "__main__":
+    main()
